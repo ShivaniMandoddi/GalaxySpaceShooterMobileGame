@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2568901731572194838}
   - component: {fileID: 2568901731572194839}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AsteroidSmall3Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2568901732329240819}
   - component: {fileID: 2568901732329240818}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AsteroidSmall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
