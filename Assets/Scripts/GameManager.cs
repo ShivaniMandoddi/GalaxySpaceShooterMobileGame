@@ -11,8 +11,9 @@ public class GameManager : MonoBehaviour
     private int lives;
 
     private int score;
+    public float cameraHalfWidth;
+    public float cameraHalfHeight;
 
-    
 
     private Camera mainCamera;
     #endregion
@@ -42,10 +43,11 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        
         lives = maxNumLives;
         mainCamera = Camera.main;
+        StartCoroutine("SpawnAsteroids");
 
-        StartCoroutine(SpawnAsteroids());
     }
 
     // Update is called once per frame
@@ -82,11 +84,67 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            //SpawnAsteroid();
+            
 
             yield return new WaitForSeconds(Random.Range(2f, 8f));
+            SpawnAsteroid();
+        }
+    }
+    // Spawn an asteroid off the screen.
+    private void SpawnAsteroid()
+    {
+        //Debug.Log("SpawnAstriod");
+        Asteroid newAsteroid = PoolManager.Instance.Spawn(Constants.ASTEROID_PREFAB_NAME).GetComponent<Asteroid>();
+
+        Vector2 direction = newAsteroid.GetForceApplied();
+
+        SpriteRenderer spriteRenderer = newAsteroid.GetComponentInChildren<SpriteRenderer>();
+        float halfWidth = spriteRenderer.bounds.size.x / 2.0f;
+        float halfHeight = spriteRenderer.bounds.size.y / 2.0f;
+
+        // Asteroid moving up and right
+        if (direction.x >= 0 && direction.y >= 0)
+        {
+            // Enter from bottom of screen
+            if (Random.Range(0, 2) == 0)
+                newAsteroid.transform.position = new Vector3(Random.Range(mainCamera.transform.position.x - cameraHalfWidth, mainCamera.transform.position.x), mainCamera.transform.position.y - cameraHalfHeight - halfHeight, newAsteroid.transform.position.z);
+            // Enter from left of screen
+            else
+                newAsteroid.transform.position = new Vector3(mainCamera.transform.position.x - cameraHalfWidth - halfWidth, Random.Range(mainCamera.transform.position.y - cameraHalfHeight, mainCamera.transform.position.y), newAsteroid.transform.position.z);
+        }
+        // Asteroid moving down and right
+        else if (direction.x >= 0 && direction.y < 0)
+        {
+            // Enter from top of screen
+            if (Random.Range(0, 2) == 0)
+                newAsteroid.transform.position = new Vector3(Random.Range(mainCamera.transform.position.x - cameraHalfWidth, mainCamera.transform.position.x), mainCamera.transform.position.y + cameraHalfHeight + halfHeight, newAsteroid.transform.position.z);
+            // Enter from left of screen
+            else
+                newAsteroid.transform.position = new Vector3(mainCamera.transform.position.x - cameraHalfWidth - halfWidth, Random.Range(mainCamera.transform.position.y, mainCamera.transform.position.y + cameraHalfHeight), newAsteroid.transform.position.z);
+        }
+        // Asteroid moving up and left
+        else if (direction.x < 0 && direction.y >= 0)
+        {
+            // Enter from bottom of screen
+            if (Random.Range(0, 2) == 0)
+                newAsteroid.transform.position = new Vector3(Random.Range(mainCamera.transform.position.x, mainCamera.transform.position.x + cameraHalfWidth), mainCamera.transform.position.y - cameraHalfHeight - halfHeight, newAsteroid.transform.position.z);
+            // Enter from right of screen
+            else
+                newAsteroid.transform.position = new Vector3(mainCamera.transform.position.x + cameraHalfWidth + halfWidth, Random.Range(mainCamera.transform.position.y - cameraHalfHeight, mainCamera.transform.position.y), newAsteroid.transform.position.z);
+        }
+        //Asteroid moving down and left
+        else
+        {
+            // Enter from top of screen
+            if (Random.Range(0, 2) == 0)
+                newAsteroid.transform.position = new Vector3(Random.Range(mainCamera.transform.position.x, mainCamera.transform.position.x + cameraHalfWidth), mainCamera.transform.position.y + cameraHalfHeight + halfHeight, newAsteroid.transform.position.z);
+            // Enter from right of screen
+            else
+                newAsteroid.transform.position = new Vector3(mainCamera.transform.position.x + cameraHalfWidth + halfWidth, Random.Range(mainCamera.transform.position.y, mainCamera.transform.position.y + cameraHalfHeight), newAsteroid.transform.position.z);
         }
     }
     #endregion
+
+
 
 }

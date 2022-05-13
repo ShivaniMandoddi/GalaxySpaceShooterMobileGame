@@ -43,6 +43,7 @@ namespace MyMobileGalaxyShooter
                     if (movement.magnitude > tapMaxMovement)
                     {
                         tapGestureFailed = true;
+                        Debug.Log("Touch Failed");
                     }
                 }
                 else  

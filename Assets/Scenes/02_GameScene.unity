@@ -196,6 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c60e98a44ef7d44c9426b90bed0bb6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraHalfWidth: 0
+  cameraHalfHeight: 0
 --- !u!4 &156801901
 Transform:
   m_ObjectHideFlags: 0
@@ -271,71 +273,6 @@ MonoBehaviour:
   - {fileID: 1615751040578320353, guid: a57ceea2099f15c4eb78dc16153b2d9a, type: 3}
   - {fileID: 6786311669631436378, guid: 3e38c3c5233910c4499d9dfb140b34dd, type: 3}
   - {fileID: 4761131397849675924, guid: fe3edc3cbde7e2143a507a1ff880c5a1, type: 3}
---- !u!1001 &1214606587
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2872108119333496016, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: speed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496018, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_Name
-      value: Bullet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496018, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2872108119333496019, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
 --- !u!4 &1469631933 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7608770828279535307, guid: f7d402ef03229b94394d29a2dda037eb, type: 3}
@@ -381,13 +318,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1808593495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0f81c112009d34aaea0750c8bc6614, type: 3}
+  m_Script: {fileID: 11500000, guid: d7848ba9373463b458c8e3cffa7eb76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefabsToPool:
-  - prefab: {fileID: 2872108119333496018, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
+  - prefab: {fileID: 4277596077672375326, guid: 69edffa1cf282554c975788138382e0b, type: 3}
     initialCapacity: 10
-  - prefab: {fileID: 1388779612806158845, guid: 284228df5d80a30488040a09bebb3e13, type: 3}
+  - prefab: {fileID: 2872108119333496018, guid: a4fc5912cbc2da24589cc2e9a2a4a2df, type: 3}
     initialCapacity: 10
 --- !u!1 &2126352222
 GameObject:

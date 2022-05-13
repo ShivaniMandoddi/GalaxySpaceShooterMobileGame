@@ -20,7 +20,7 @@ public class PoolManager : MonoBehaviour
 	#endregion
 
 	#region PRIVATE VARIABLES
-	private Dictionary<string, ObjectPool> pools;
+	public Dictionary<string, ObjectPool> pools;
 	#endregion
 
 	#region SINGLETON PATTERN
@@ -36,7 +36,7 @@ public class PoolManager : MonoBehaviour
 
 				if (_instance == null)
 				{
-					GameObject container = new GameObject("Pool Manager");
+					GameObject container = new GameObject("PoolManager");
 					_instance = container.AddComponent<PoolManager>();
 				}
 			}
@@ -65,11 +65,13 @@ public class PoolManager : MonoBehaviour
 
 		ObjectPool newPool = new ObjectPool(prefab, initialCapacity);
 		pools.Add(prefab.name, newPool);
+		
 	}
 
 	// Spawn an object with the given name.
 	public GameObject Spawn(string prefabName)
 	{
+		Debug.Log(prefabName);
 		if (!pools.ContainsKey(prefabName))
 			return null;
 

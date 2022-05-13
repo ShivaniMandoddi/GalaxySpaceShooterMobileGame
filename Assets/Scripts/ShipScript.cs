@@ -97,7 +97,7 @@ public class ShipScript : MonoBehaviour
     public void OnHit()
     {
        gameManager.LoseLife();
-        //StartCoroutine(StartInvincibilityTimer(2.5f));
+        StartCoroutine(StartInvincibilityTimer(2.5f));
     }
     // Make the ship invincible for a time.
     private IEnumerator StartInvincibilityTimer(float timeLimit)

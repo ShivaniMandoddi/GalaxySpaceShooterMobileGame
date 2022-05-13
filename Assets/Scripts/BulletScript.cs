@@ -47,6 +47,7 @@ public class BulletScript : MonoBehaviour
 	public void SetTrajectory(Vector3 target)
 	{
 		transform.LookAt(target, Vector3.back);
+		//transform.LookAt(target, Vector3.forward);
 	}
 	#endregion
 

@@ -34,7 +34,7 @@ public class ObjectPool
 	public GameObject Spawn()
 	{
 		GameObject obj;
-
+		
 		if (pool.Count > 0)
 			obj = pool.Dequeue();
 		else
