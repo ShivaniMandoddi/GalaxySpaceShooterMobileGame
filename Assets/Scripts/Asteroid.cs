@@ -4,9 +4,12 @@ using System.Collections;
 // Class for asteroid objects.
 public class Asteroid : MonoBehaviour
 {
+	#region PUBLIC VARIABLES
+	public GameObject explosionEffect;
+    #endregion
 
-	#region PRIVATE VARIABLES
-	private bool isLarge;
+    #region PRIVATE VARIABLES
+    private bool isLarge;
 
 	private Vector2 force;
 
@@ -53,6 +56,8 @@ public class Asteroid : MonoBehaviour
 		}
 		else if (collision.gameObject.layer == Constants.BULLET_LAYER_NUMBER)
 		{
+			//GameObject temp=Instantiate(explosionEffect, collision.gameObject.transform.position, Quaternion.identity);
+			ParticleManager.Instance.PlayingEffect(explosionEffect, collision.gameObject.transform.position);
 			PoolManager.Instance.Recycle(Constants.BULLET_PREFAB_NAME, collision.transform.parent.gameObject);
 
 			if (!isLarge)
@@ -62,6 +67,7 @@ public class Asteroid : MonoBehaviour
 
 			gameManager.GainPoints(points);
 		}
+		
 	}
 	#endregion
 

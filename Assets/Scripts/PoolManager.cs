@@ -71,7 +71,7 @@ public class PoolManager : MonoBehaviour
 	// Spawn an object with the given name.
 	public GameObject Spawn(string prefabName)
 	{
-		Debug.Log(prefabName);
+		
 		if (!pools.ContainsKey(prefabName))
 			return null;
 

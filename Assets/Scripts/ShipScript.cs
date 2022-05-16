@@ -9,17 +9,27 @@ public class ShipScript : MonoBehaviour
     public float rotationSpeed=10f; //   rotation of ship in degrees per second.
     public float movementSpeed=2f; // the movement of ship by force applied in second
     public Transform launcher;
+    public GameObject bulletfireEffect;
+    public bool useAccelerometer = false;
     #endregion
     #region PRIVATE VARIABLES
     private bool isRotating = false;
     private const string TURN_COROUTINE_FUNCTION = "TurnRotateOnTap";
     private GameManager gameManager;
+    private Rigidbody2D rigidbody2D;
+
     #endregion
     #region MONOBEHAVIOUR METHODS
+    private void Awake()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+    }
     void Start()
     {
         gameManager = GameManager.Instance;
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -28,11 +38,33 @@ public class ShipScript : MonoBehaviour
     }
     private void OnEnable() // When gameobject is active, then we are subscribing 
     {
-        MyMobileGalaxyShooter.UserInputHandler.OnTouchAction += TowardsTouch;
+        if (!useAccelerometer)
+        {
+            MyMobileGalaxyShooter.UserInputHandler.OnTouchAction += TowardsTouch;
+            MyMobileGalaxyShooter.UserInputHandler.OnPanBegan += StopTurn;
+            MyMobileGalaxyShooter.UserInputHandler.OnPanHeld += MoveTowardsTouch;
+        }
+        
+            else
+            {
+                MyMobileGalaxyShooter.UserInputHandler.OnAccelerometerChanged += MoveWithAcceleration;
+                MyMobileGalaxyShooter.UserInputHandler.OnTouchAction += TowardsTouch;
+            }
+        
     }
     private void OnDisable()// When gameobject is inactive, then we are desubscribing 
     {
-        MyMobileGalaxyShooter.UserInputHandler.OnTouchAction -= TowardsTouch;
+        if (!useAccelerometer)
+        {
+            MyMobileGalaxyShooter.UserInputHandler.OnTouchAction -= TowardsTouch;
+            MyMobileGalaxyShooter.UserInputHandler.OnPanBegan -= StopTurn;
+            MyMobileGalaxyShooter.UserInputHandler.OnPanHeld -= MoveTowardsTouch;
+        }
+        else
+        {
+            MyMobileGalaxyShooter.UserInputHandler.OnAccelerometerChanged -= MoveWithAcceleration;
+            MyMobileGalaxyShooter.UserInputHandler.OnTouchAction -= TowardsTouch;
+        }
     }
 
     #endregion
@@ -88,9 +120,17 @@ public class ShipScript : MonoBehaviour
     }
     #endregion
     #region MY PRIVATE METHODS
+    private void StopTurn(Touch t)        //When pan gesture began
+    {
+        StopCoroutine(TURN_COROUTINE_FUNCTION); 
+        isRotating = false;
+    }
+
     private void Shoot()
     {
         BulletScript bullet = PoolManager.Instance.Spawn(Constants.BULLET_PREFAB_NAME).GetComponent<BulletScript>();
+        //Destroy(Instantiate(bulletfireEffect, launcher.position, Quaternion.identity),2f);
+        ParticleManager.Instance.PlayingEffect(bulletfireEffect, launcher.position);
         bullet.SetPosition(launcher.position);
         bullet.SetTrajectory(bullet.transform.position + transform.forward);
     }
@@ -120,6 +160,40 @@ public class ShipScript : MonoBehaviour
         spriteRenderer.enabled = true;
         GetComponent<Collider2D>().enabled = true;
     }
+    private void MoveTowardsTouch(Touch t)
+    {
+        Vector3 targetPoint = Camera.main.ScreenToWorldPoint(t.position);
+
+        rigidbody2D.AddForce(transform.forward * movementSpeed * Time.deltaTime);
+        TurnTowardsPointUpdate(targetPoint);
+    }
+    private void TurnTowardsPointUpdate(Vector3 point)
+    {
+        point = point - transform.position;
+        point.z = transform.position.z;
+
+        Quaternion startRotation = transform.rotation;
+        Quaternion endRotation = Quaternion.LookRotation(point, Vector3.forward);
+
+        transform.rotation = Quaternion.RotateTowards(startRotation, endRotation, rotationSpeed * Time.deltaTime);
+    }
+    private void MoveWithAcceleration(Vector3 acceleration)
+    {
+        if (!isRotating)
+        {
+            acceleration.z = 0;
+
+            if (acceleration.sqrMagnitude >= 0.03f)
+            {
+                Vector3 targetPoint = transform.position + acceleration;
+
+                rigidbody2D.AddForce(transform.forward * movementSpeed * Time.deltaTime);
+                TurnTowardsPointUpdate(targetPoint);
+
+            }
+        }
+    }
+
     #endregion
 
 }
